@@ -4,6 +4,7 @@ from escola.models import Estudante, Curso, Matricula
 from escola.serializers import (
     EstudanteSerializer,
     CursoSerializer,
+    EstudanteSerializerV2,
     MatriculaSerializer,
     ListaMatriculasEstudanteSerializer,
     ListaMatriculasCursoSerializer,
@@ -12,10 +13,18 @@ from escola.serializers import (
 
 class EstudanteViewSet(viewsets.ModelViewSet):
     queryset = Estudante.objects.all()
-    serializer_class = EstudanteSerializer
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
     ordering_fields = ['nome']
     search_fields = ['nome', 'cpf']
+
+    def get_serializer_class(self):
+        if self.request.version == 'v2':
+            return EstudanteSerializerV2
+        return EstudanteSerializer
 
 
 class CursoViewSet(viewsets.ModelViewSet):
