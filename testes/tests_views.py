@@ -23,7 +23,7 @@ class EstudanteViewSetTestCase(TestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
         self.estudante = Estudante.objects.create(
-            nome="Test Stud",
+            nome="Test Student",
             cpf="12345678901",
             data_nascimento="2000-01-01",
             celular="11987654321",
